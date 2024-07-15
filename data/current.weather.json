@@ -1,0 +1,45 @@
+{
+  "coord": {
+    "lon": 126.3793,
+    "lat": 34.8127
+  },
+  "weather": [
+    {
+      "id": 802,
+      "main": "Clouds",
+      "description": "구름조금",
+      "icon": "03d"
+    }
+  ],
+  "base": "stations",
+  "main": {
+    "temp": 29.01,
+    "feels_like": 33.52,
+    "temp_min": 29.01,
+    "temp_max": 29.01,
+    "pressure": 1011,
+    "humidity": 74,
+    "sea_level": 1011,
+    "grnd_level": 1011
+  },
+  "visibility": 10000,
+  "wind": {
+    "speed": 3.6,
+    "deg": 200
+  },
+  "clouds": {
+    "all": 40
+  },
+  "dt": 1721009665,
+  "sys": {
+    "type": 1,
+    "id": 8075,
+    "country": "KR",
+    "sunrise": 1720989125,
+    "sunset": 1721040503
+  },
+  "timezone": 32400,
+  "id": 1841066,
+  "name": "Mokpo",
+  "cod": 200
+}
