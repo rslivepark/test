@@ -4,7 +4,7 @@ const fetchEnv = async () => {
     throw new Error('Failed to fetch environment variables');
   }
   const env = await response.json();
-  console.log(env);
+  // console.log(env);
   return env;
 };
 
