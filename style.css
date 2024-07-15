@@ -1,3 +1,65 @@
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
+}
+ol,
+ul {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+  color: #000;
+  display: block;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+input,
+select,
+textarea,
+fieldset {
+  border: 0;
+}
+caption,
+legend {
+  display: none;
+}
+img {
+  vertical-align: top;
+  border: 0;
+}
+address {
+  font-style: normal;
+}
+body {
+  color: #fff;
+}
+
+#wrap {
+  padding: 0.5rem;
+}
+#menu {
+  @media screen and (min-width: 768px) {
+    background-color: orange;
+    width: 238px;
+    height: calc(100vh - 1rem);
+    margin-right: 0.5rem;
+  }
+  /* position: fixed; */
+}
+#main {
+  border: 1px solid #fff;
+}
+#header {
+  height: 4rem;
+  background-color: #e5e5e5;
+}
+#section {
+  padding-inline: 1rem;
+}
+
+.playlist-link {
+  color: #fafafa;
 }
