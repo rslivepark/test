@@ -90,6 +90,7 @@ const callSpotifyAPI = async (weatherData, env) => {
   );
   const spotifyData = await response.json();
   console.log(spotifyData.playlists.items);
+  console.log('spotify q=', weatherData.weather[0].main);
 };
 
 getWeatherInfo();
