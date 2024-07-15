@@ -1,7 +1,8 @@
-// weather api 호출
-
 const fetchEnv = async () => {
   const response = await fetch('/.netlify/functions/env');
+  if (!response.ok) {
+    throw new Error('Failed to fetch environment variables');
+  }
   const env = await response.json();
   return env;
 };
@@ -22,8 +23,6 @@ const getWeatherInfo = async () => {
 
     // 현재 위치, 날씨
     url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=kr&appid=${WEATHER_API_KEY}`;
-
-    // url = './data/current.weather.json';
 
     // 도시 위치, 날씨
     // url = `https://api.openweathermap.org/data/2.5/weather?q=Dubai&appid=${WEATHER_API_KEY}&units=metric&lang=kr`;
