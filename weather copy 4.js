@@ -12,7 +12,6 @@ const getWeatherInfo = async () => {
     let lon = position.coords.longitude;
 
     url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=us&appid=${WEATHER_API_KEY}`;
-    // url = `https://api.openweathermap.org/data/2.5/weather?q=Bali&units=metric&lang=us&appid=${WEATHER_API_KEY}`;
 
     const response = await fetch(url);
     if (!response.ok) {
@@ -20,13 +19,13 @@ const getWeatherInfo = async () => {
     }
 
     const data = await response.json();
-    // console.log(data);
-    // console.log(data.name, data.weather[0].main, data.weather[0].description);
+    console.log(data);
+    console.log(data.name, data.weather[0].main, data.weather[0].description);
 
     renderHTML(data);
     const weatherDescription = matchWeather(data.weather[0].main);
     await callSpotifyAPI(weatherDescription);
-    // console.log('Weather Description:', weatherDescription);
+    console.log('Weather Description:', weatherDescription);
   } catch (error) {
     console.log('Error Message >> ', error);
   }
@@ -123,7 +122,7 @@ const callSpotifyAPI = async (weatherDescription) => {
   }
 
   const spotifyData = await response.json();
-  // console.log('Playlists:', spotifyData.playlists.items);
+  console.log('Playlists:', spotifyData.playlists.items);
 
   if (spotifyData.playlists.items.length === 0) {
     throw new Error('No playlists found');
@@ -131,7 +130,7 @@ const callSpotifyAPI = async (weatherDescription) => {
 
   renderPlaylists(spotifyData.playlists.items); // 플레이리스트 정보를 렌더링
 
-  // console.log('Spotify query:', weatherDescription);
+  console.log('Spotify query:', weatherDescription);
 };
 
 const loadMusic = async (tracks, token, weatherDescription) => {
@@ -158,7 +157,7 @@ const loadMusic = async (tracks, token, weatherDescription) => {
       })
     );
 
-    // console.log(musicInfo); // 최종 업데이트된 음악 정보 출력
+    console.log(musicInfo); // 최종 업데이트된 음악 정보 출력
     return musicInfo;
   } catch (error) {
     console.log('Error loading music:', error);
@@ -167,38 +166,20 @@ const loadMusic = async (tracks, token, weatherDescription) => {
 
 // 날씨와 음악 매칭하기
 const matchWeather = (weather) => {
-  switch (weather) {
-    case 'Clear':
-      return '화창한 날 sunny clear';
-    case 'Clouds':
-      return '비온 후 맑게 갠 cloudy overcast';
-    case 'Rain':
-      return '비 rainy rain';
-    case 'Drizzle':
-      return '이슬비 drizzly drizzle';
-    case 'Thunderstorm':
-      return '천둥 번개 thunderstorm thunder';
-    case 'Snow':
-      return '눈오는 날 snowy snow';
-    case 'Mist':
-      return '안개 misty mist';
-    case 'Smoke':
-      return '연기 smoky smoke';
-    case 'Haze':
-      return '실안개 hazy haze';
-    case 'Dust':
-    case 'Sand':
-      return '먼지 dusty sand';
-    case 'Fog':
-      return '안개 foggy fog';
-    case 'Ash':
-      return '재 ash';
-    case 'Squall':
-      return '돌풍 squall';
-    case 'Tornado':
-      return '토네이도 tornado';
-    default:
-      return '비 흐림 rainy cloudy overcast';
+  if (weather === 'Clear') {
+    return '화창한 날 sunny clear'; // 날씨가 맑으면 화창한 날
+  } else if (weather === 'Clouds') {
+    return '비온 후 맑게 갠 cloudy overcast'; // 구름이 끼고 특정 조건에 맞으면 비온 후 맑게 갠 날
+  } else if (weather === 'Snow') {
+    return '눈오는 날 snowy snow'; // 눈이 오면 눈오는 날
+  } else if (weather === 'Rain') {
+    return '비 rainy rain'; // 비오는 날
+  } else if (weather === 'Drizzle') {
+    return '이슬비 drizzly drizzle'; // 이슬비 오는 날
+  } else if (weather === 'Thunderstorm') {
+    return '천둥 번개 thunderstorm thunder'; // 천둥 번개 치는 날
+  } else {
+    return '비 흐림 rainy cloudy overcast'; // 나머지는 비 또는 흐림
   }
 };
 
@@ -267,23 +248,6 @@ const matchWeatherWithSong = (eachInfo) => {
     eachInfo.tempo > 120
   ) {
     eachInfo.mood.push('폭염/ 더위'); // 댄스 가능성과 에너지가 높고 템포가 빠른 노래는 폭염/ 더위
-  } else if (
-    eachInfo.songName.toLowerCase().indexOf('mist') !== -1 ||
-    eachInfo.songName.toLowerCase().indexOf('smoke') !== -1 ||
-    eachInfo.songName.toLowerCase().indexOf('haze') !== -1 ||
-    eachInfo.songName.toLowerCase().indexOf('fog') !== -1
-  ) {
-    eachInfo.mood.push('안개/ 연기');
-  } else if (
-    eachInfo.songName.toLowerCase().indexOf('dust') !== -1 ||
-    eachInfo.songName.toLowerCase().indexOf('sand') !== -1 ||
-    eachInfo.songName.toLowerCase().indexOf('ash') !== -1
-  ) {
-    eachInfo.mood.push('먼지/ 재');
-  } else if (eachInfo.songName.toLowerCase().indexOf('tornado') !== -1) {
-    eachInfo.mood.push('토네이도');
-  } else if (eachInfo.songName.toLowerCase().indexOf('squall') !== -1) {
-    eachInfo.mood.push('돌풍');
   }
 
   return eachInfo;

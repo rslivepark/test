@@ -6,7 +6,7 @@
   "weather": [
     {
       "id": 802,
-      "main": "Clouds",
+      "main": "Clear",
       "description": "구름조금",
       "icon": "03d"
     }
