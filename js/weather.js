@@ -25,6 +25,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const WEATHER_API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
     try {
       spinner.style.display = 'flex'; // 로딩 스피너 표시
+      if (spinner.style.display === 'flex') {
+        const footer = document.querySelector('.right-footer');
+        footer.style.display = 'none';
+      }
 
       const position = await new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(resolve, reject);
@@ -62,6 +66,8 @@ document.addEventListener('DOMContentLoaded', () => {
       // console.log('Error Message >> ', error);
     } finally {
       spinner.style.display = 'none'; // 로딩 스피너 숨김
+      const footer = document.querySelector('.right-footer');
+      footer.style.display = 'flex';
     }
   };
 
