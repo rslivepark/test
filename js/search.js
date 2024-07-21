@@ -116,8 +116,8 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const callSpotifySearchAPI = async (query) => {
-    const CLIENT_ID = import.meta.env.VITE_CLIENT_ID;
-    const CLIENT_SECRET = import.meta.env.VITE_CLIENT_SECRET;
+    const CLIENT_ID = import.meta.env.CLIENT_ID;
+    const CLIENT_SECRET = import.meta.env.CLIENT_SECRET;
 
     const token = await getSearchAccessToken(CLIENT_ID, CLIENT_SECRET);
     const urls = getSpotifySearchURLs(query);

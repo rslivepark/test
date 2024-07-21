@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const getWeatherIcon = async () => {
-    const WEATHER_API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
+    const WEATHER_API_KEY = import.meta.env.WEATHER_API_KEY;
     try {
       spinner.style.display = 'flex'; // 로딩 스피너 표시
       if (spinner.style.display === 'flex') {
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const getWeatherInfo = async () => {
-    const WEATHER_API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
+    const WEATHER_API_KEY = import.meta.env.WEATHER_API_KEY;
     try {
       spinner.style.display = 'flex';
 
@@ -277,8 +277,8 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const callSpotifyWeatherAPI = async (weatherDescription) => {
-    const CLIENT_ID = import.meta.env.VITE_CLIENT_ID;
-    const CLIENT_SECRET = import.meta.env.VITE_CLIENT_SECRET;
+    const CLIENT_ID = import.meta.env.CLIENT_ID;
+    const CLIENT_SECRET = import.meta.env.CLIENT_SECRET;
 
     const token = await getAccessTokenWeather(CLIENT_ID, CLIENT_SECRET);
     let query = weatherDescription;
