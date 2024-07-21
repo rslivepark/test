@@ -1,0 +1,969 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+
+:root {
+  --main-font-color: #b3b3b3;
+  --background-base: #121212;
+  --main-accent-color: #1ed760;
+  --white: #fafafa;
+  --black: #242424;
+  /* 날씨 아이콘 색상 */
+  --sun: #cc1111;
+  --rain: #60a3d7;
+  --snow: #e3f4fe;
+  --cloud: #eaeaea;
+  --thunder: #ffcd00;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+ol,
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+a {
+  text-decoration: none;
+  color: var(--main-font-color);
+  display: block;
+}
+button {
+  background: none;
+  border: none;
+  color: var(--main-font-color);
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+input,
+select,
+textarea,
+fieldset {
+  border: 0;
+}
+caption,
+legend {
+  display: none;
+}
+img {
+  vertical-align: top;
+  border: 0;
+}
+address {
+  font-style: normal;
+}
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  color: var(--main-font-color);
+}
+
+#wrap {
+  height: 100vh;
+  padding: 0.5rem;
+}
+
+.logo-box {
+  padding: 0.5rem 0.75rem;
+  display: flex;
+  align-items: center;
+}
+.logo-box > i {
+  font-size: 1.5rem;
+}
+.logo-box > span {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-left: 5px;
+}
+/* .main-logo {
+  width: 78px;
+} */
+.fa-spotify {
+  color: var(--main-accent-color);
+}
+
+.left-section {
+  position: sticky;
+  top: 0.5rem;
+  z-index: 9;
+  @media screen and (min-width: 768px) {
+    width: 238px;
+    margin-right: 0.5rem;
+    display: flex;
+    align-items: center;
+  }
+}
+@media screen and (max-width: 768px) {
+  ul.menu,
+  div.weather-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+#nav {
+  /* background-color: cadetblue; */
+  background-color: var(--background-base);
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+}
+
+.menu .menu-btn {
+  padding: 0.5rem 0.75rem;
+  width: 100%;
+  text-align: left;
+  transition: all 0.3s;
+  &:hover {
+    color: #fff;
+  }
+}
+.menu .menu-btn .fa-solid {
+  margin-right: 0.25rem;
+}
+
+#map {
+  width: 210px;
+  height: 180px;
+  margin: 4px 4px;
+}
+
+.left-footer {
+  /* background-color: cadetblue; */
+  background-color: var(--background-base);
+  border-radius: 0.5rem;
+  padding: 2rem 1.5rem;
+}
+.left-footer-link-box {
+  margin-bottom: 2rem;
+}
+
+.left-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 1rem;
+}
+.left-footer-links li {
+  font-size: 11px;
+  line-height: 1.5rem;
+}
+.footer-link-cookie {
+  font-size: 11px;
+  line-height: 1.5rem;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+.left-footer-language {
+  background-color: transparent;
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: white;
+  border: 1px solid #727272;
+  text-align: center;
+  padding: 3px 15px;
+  border-radius: 1rem;
+  transition: all 0.5s;
+  cursor: pointer;
+  &:hover {
+    transform: scale(1.1);
+    border: 1px solid #fff;
+  }
+}
+
+#main {
+  /* border: 1px solid #fff; */
+  position: relative;
+  overflow-y: scroll;
+  overflow-x: hidden;
+
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+  &:hover::-webkit-scrollbar-thumb {
+    background-color: #5a5a5a;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: #8d8d8d;
+  }
+}
+
+#header {
+  height: 4rem;
+  padding-inline: 1rem;
+  background-color: #101010;
+  position: sticky;
+  top: 0.5rem;
+  z-index: 3;
+  @media screen and (max-width: 576px) {
+    padding-bottom: 0.5rem;
+  }
+}
+.right-header-bg {
+  background: black;
+  width: 110%;
+  height: 4.5rem;
+  z-index: 3;
+  position: absolute;
+  top: -0.5rem;
+  left: -1rem;
+  margin-top: -0.5rem;
+}
+
+.header-left button {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  opacity: 0.5;
+  z-index: 4;
+}
+.header-right {
+  z-index: 4;
+  max-width: 180px;
+  width: 100%;
+}
+
+.header-right .sign-up-btn {
+  padding: 0.5rem 1rem;
+  &:hover {
+    transform: scale(1.1);
+    color: var(--white);
+  }
+}
+.header-right .log-in-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 1.5rem;
+  background-color: var(--white);
+  color: #000;
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.section-footer-container {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  /* 202020 - 121212 gradation */
+  background: rgb(32, 32, 32);
+  background: linear-gradient(
+    180deg,
+    rgba(32, 32, 32, 1) 0%,
+    rgba(18, 18, 18, 1) 15%,
+    rgba(18, 18, 18, 1) 100%
+  );
+  @media screen and (min-width: 1526px) {
+    padding: 0.5rem 1.5rem;
+  }
+}
+
+.artist-popular-charts-container .artist-popular-chart {
+  padding: 10px 0;
+  border-radius: 5px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.artist-popular-img {
+  height: 40px;
+  width: 40px;
+  border-radius: 5px;
+}
+.additional-tracks {
+  width: 100%;
+}
+.artist-song-name {
+  color: #fff;
+}
+.artist-song-name:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+.play-icon:hover,
+.heart-icon:hover,
+.more-icon:hover,
+.read-more:hover,
+.brief-view:hover {
+  color: #fff;
+}
+#artist-header {
+  position: relative;
+  height: 270px;
+  width: 100%;
+  overflow: hidden;
+}
+.overlay-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  position: absolute;
+  top: 40px;
+  left: 260px;
+}
+.artist-artist-name {
+  font-size: 80px;
+  font-weight: 900;
+  color: #fff;
+  cursor: pointer;
+}
+.artist-monthly-listener {
+  font-size: 20px;
+  color: #fff;
+  padding: 0.5rem;
+}
+.artist-button-area button {
+  display: flex;
+  justify-content: center;
+  font-size: 15px;
+  padding: 5px;
+  margin: 0.5rem 0;
+  border: 2px solid #b3b3b3;
+  border-radius: 30px;
+  width: 110px;
+  transition: all 0.5s;
+}
+.artist-button-area button:hover {
+  color: #fff;
+  border: 2px solid #fff;
+}
+.artist-card-img-box {
+  position: relative;
+  transition: all 0.2s ease-out;
+  width: 210px;
+  height: 210px;
+}
+.artist-card-img img {
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 40px;
+  left: 20px;
+  z-index: 1;
+}
+.artist-card-play-btn {
+  width: 4rem;
+  height: 4rem;
+  z-index: 2;
+  background: url(img/play-button.png) no-repeat center;
+  background-size: contain;
+  position: absolute;
+  top: 85%;
+  left: 75%;
+  opacity: 0.9;
+  border-radius: 50%;
+  box-shadow: 0 8px 8px rgba(0, 0, 0, 0.3);
+}
+.artist-card-play-btn:hover {
+  transform: scale(1.05);
+  opacity: 1;
+}
+.artist-artist-rec-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  justify-content: center;
+  padding: 20px 0;
+}
+.read-more,
+.brief-view {
+  padding: 1rem 1rem;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.contents-header {
+  padding: 0.5rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.contents-header-title:hover,
+.contents-header-show-more:hover {
+  text-decoration: underline;
+}
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  /* 줄 개수 바꾸기 (줄 개수, ...) */
+  grid-template-rows: repeat(1, minmax(0, 1fr));
+
+  /* 1줄 표시하는 부분 */
+  /* 이 줄을 1로 바꾸면 모든 아이템 표시 */
+  grid-auto-rows: 0;
+
+  overflow: hidden;
+  @media screen and (min-width: 576px) {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+  @media screen and (min-width: 1526px) {
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  }
+}
+/* 2줄만 표시하고 싶다면 이 클래스 이름 추가 */
+.card-two-lines {
+  grid-template-rows: repeat(2, minmax(0, 1fr)) !important;
+}
+
+.contents-card {
+  padding: 0.75rem;
+  transition: all 0.2s ease-out;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  &:hover {
+    background-color: #1a1a1a;
+    .card-play-btn {
+      display: block;
+    }
+  }
+}
+.card-img-box {
+  position: relative;
+  transition: all 0.2s ease-out;
+}
+
+.card-img {
+  border-radius: 8px;
+  overflow: hidden;
+  img {
+    width: 100%;
+  }
+}
+
+/* 아티스트 원형 이미지일때만 이 클래스 이름 추가 */
+.card-artist-img {
+  border-radius: 50%;
+}
+
+.card-text {
+  margin-top: 0.5rem;
+}
+.card-title {
+  color: var(--white);
+}
+.card-subtitle {
+  font-size: 14px;
+}
+.card-subtitle-artist:hover {
+  text-decoration: underline;
+}
+
+.card-play-btn {
+  width: 3rem;
+  height: 3rem;
+  z-index: 2;
+  background: url(img/play-button.png) no-repeat center;
+  background-size: contain;
+  position: absolute;
+  right: 0.5rem;
+  bottom: 0.5rem;
+  opacity: 0.9;
+  display: none;
+  border-radius: 50%;
+  box-shadow: 0 8px 8px rgba(0, 0, 0, 0.3);
+  &:hover {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+}
+.right-footer {
+  margin-top: 2rem;
+  padding: 3rem 0 2.5rem;
+  @media screen and (min-width: 992px) {
+    padding: 3rem 1rem 2.5rem;
+  }
+
+  position: relative;
+  bottom: 0;
+}
+
+.right-footer-top {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 2.5rem;
+  margin-bottom: 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+.right-footer-links {
+  display: flex;
+  flex-grow: 1;
+  column-gap: 1.5rem;
+}
+.right-footer-links > li {
+  width: 30%;
+  min-width: fit-content;
+}
+
+.f-sub_menu > li {
+  margin-bottom: 0.5rem;
+}
+
+.right-footer-title {
+  font-weight: 700;
+  color: white;
+}
+.right-footer-item:hover {
+  color: white;
+  text-decoration: underline;
+}
+
+.f-social {
+  display: flex;
+  gap: 1rem;
+}
+.social-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  text-align: center;
+  color: #fff;
+  line-height: 2.5rem;
+  background-color: #292929;
+  &:hover {
+    background-color: #727272;
+  }
+}
+.copyright {
+  font-size: 14px;
+}
+
+/*weather playlist */
+.main_weather_playlist {
+  display: flex;
+  flex-direction: column;
+}
+
+.weather-playlist-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  grid-template-rows: repeat(1, minmax(0, 1fr));
+  grid-auto-rows: 0;
+  transition: max-height 0.5s ease;
+  @media screen and (max-width: 378px) {
+    grid-template-columns: repeat(2, 1fr); /* 한 줄에 2개의 아이템 */
+  }
+}
+.weather-playlist-row2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  grid-template-rows: auto;
+  grid-auto-rows: auto;
+  overflow: visible;
+  transition: max-height 0.5s ease;
+}
+.single-line-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100px;
+  width: 100%;
+  text-align: center;
+}
+.weather_playlist_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.weather_playlist_header .contents-header-show-more {
+  cursor: pointer;
+}
+.playlist-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.playlist-item:hover {
+  transform: scale(1.1);
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+.playlist-item:hover a {
+  color: var(--main-accent-color);
+}
+.playlist-item > img {
+  width: 200px !important;
+  height: 200px !important;
+}
+.weather-playlist-more {
+  color: var(--main-font-color);
+  padding: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+/* 로딩 스피너 스타일 */
+.spinner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 50px;
+  height: 50px;
+  border: 6px solid var(--main-accent-color);
+  border-radius: 50%;
+  border-top-color: #000;
+  animation: spin 1s ease-in-out infinite;
+  display: none; /* 초기에는 스피너를 숨김 */
+  z-index: 1000; /* 다른 요소 위에 나타나도록 설정 */
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/*검색어 입력*/
+.nav-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+.nav-button {
+  margin: 0 1rem;
+  font-size: 1.4rem;
+}
+.search {
+  align-items: center;
+  z-index: 4;
+  display: none;
+  position: relative;
+}
+@media screen and (max-width: 576px) {
+  .search {
+    right: 7rem;
+    display: flex;
+  }
+}
+.search.search-active {
+  display: flex;
+}
+.search-submit {
+  display: flex;
+  align-items: center;
+  max-width: 450px;
+  width: 100%;
+  height: 50px;
+  padding-left: 0.5rem;
+}
+.search-input {
+  border: none;
+  background-color: transparent;
+  max-width: 450px;
+  width: 100%;
+  height: 50px;
+  color: var(--white);
+  padding-left: 0.5rem;
+  &:focus {
+    outline: none;
+    border-bottom: 1px solid var(--main-accent-color);
+  }
+
+  @media screen and (max-width: 520px) {
+    max-width: 400px;
+    width: 100%;
+    max-height: 45px;
+    height: 100%;
+  }
+}
+.search-span {
+  display: flex;
+  position: relative;
+  right: 12rem;
+  align-items: center;
+  pointer-events: none;
+}
+@media screen and (max-width: 520px) {
+}
+.search-glass {
+  cursor: pointer;
+}
+
+/* 검색 결과 화면 */
+.search_playlist_header {
+  display: flex;
+  justify-content: space-between !important;
+  align-items: center;
+  width: 100%;
+}
+.search-result-header-text {
+  display: flex;
+  align-items: center;
+}
+.search-row-more {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  right: 2rem;
+
+  @media screen and (max-width: 512px) {
+    font-size: 16px;
+  }
+}
+/* 검색 결과 곡 UI */
+#section
+  > div:nth-child(1)
+  > div
+  > div.card-container.search-track
+  > div
+  > div.card-img-box.position-relative
+  > div.search-img
+  > img {
+  width: 50px;
+  height: 50px;
+}
+
+div:nth-child(1) > div > div.card-container.search-track {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#section
+  > div:nth-child(1)
+  > div
+  > div.card-container.search-track
+  > .search-playlist-item {
+  display: grid;
+  grid-template-columns: 50px 1fr 1fr 100px;
+  align-items: center;
+  height: 80px;
+  gap: 10px;
+}
+
+#section
+  > div:nth-child(1)
+  > div
+  > div.card-container.search-track
+  > .search-playlist-item
+  > div.card-text.search-track-list {
+  display: contents;
+}
+
+#section
+  > div:nth-child(1)
+  > div
+  > div.card-container.search-track
+  > .search-playlist-item
+  > div.card-text.search-track-list
+  > p {
+  margin: 0;
+  text-align: left;
+}
+#section
+  > div:nth-child(1)
+  > div
+  > div.card-container.search-track
+  > .search-playlist-item
+  > div.card-text.search-track-list
+  > p:nth-child(1) {
+  margin-left: 1rem;
+}
+
+#section
+  > div:nth-child(1)
+  > div
+  > div.card-container.search-track
+  > .search-playlist-item
+  > div.card-text.search-track-list
+  > p:last-child {
+  text-align: right;
+}
+#section
+  > div:nth-child(1)
+  > div
+  > div.contents-header.search_playlist_header
+  > div
+  > button {
+  display: none;
+}
+
+.search-album-tag,
+.search-genres-tag {
+  text-transform: capitalize;
+}
+
+.search-album-tag {
+  font-size: 13px;
+}
+.search-playlist-item {
+  max-height: 340px;
+  height: 100%;
+}
+
+/* 메인화면 날씨 아이콘 색상*/
+h1 > .sun,
+h4 > .sun,
+button > .sun {
+  color: var(--sun);
+}
+h4 > .rain,
+button > .rain {
+  color: var(--rain);
+}
+h4 > .snow,
+button > .snow {
+  color: var(--snow);
+}
+h4 > .cloud,
+button > .cloud {
+  color: var(--cloud);
+}
+h4 > .thunder {
+  color: var(--thunder);
+}
+
+/*weather display on left*/
+.weather-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+@media screen and (max-width: 768px) {
+  .weather-display {
+    display: flex;
+  }
+  .weather-display > img {
+    display: none;
+  }
+  .weather-current {
+    font-weight: 600;
+    color: var(--cloud);
+  }
+}
+
+/* 400px 미만 경고메시지 표시 */
+.browser-alert {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100vh;
+  color: var(--main-accent-color);
+  background-color: var(--black);
+  font-size: 1.4rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* 회원가입, 로그인 화면 */
+.sign-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.sign-in,
+.sign-up {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-height: 500px;
+  height: 100%;
+  margin: 5rem auto;
+  padding: 3rem;
+}
+
+.signin-input,
+.signup-input {
+  display: flex;
+  flex-direction: column;
+}
+#signin-email,
+#signin-password,
+#signup-username,
+#signup-email,
+#signup-password {
+  border-bottom: 1px solid var(--main-font-color);
+  background-color: transparent;
+  width: 300px;
+  /* width: 100%; */
+  height: 50px;
+  color: var(--white);
+  margin: 1rem 0;
+  &:focus {
+    outline: none;
+    border-bottom: 1px solid var(--main-accent-color);
+  }
+}
+
+.toSign-button {
+  margin-top: 1.4rem;
+  &:hover {
+    color: var(--main-accent-color);
+  }
+}
+.toSign-button > button:hover {
+  color: var(--main-accent-color);
+}
+.toSignin-button {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.toSignin-button > span,
+.toSignin-button > a > span {
+  font-size: 12px;
+}
+.toSignin-button > a:hover {
+  color: var(--main-accent-color);
+}
+
+.signin-buttons > button:nth-child(1) {
+  &:hover {
+    transform: scale(1.1);
+    transition: 0.5s all ease-in-out;
+    color: var(--main-accent-color);
+  }
+}
+.signin-buttons > button:nth-child(2) {
+  font-size: 0.9rem;
+  &:hover {
+    transform: scale(1.1);
+    transition: 0.5s all ease-in-out;
+    color: var(--main-accent-color);
+  }
+}
+
+/* 뒤로가기, 앞으로가기 */
+.opacity-100 {
+  opacity: 1;
+}

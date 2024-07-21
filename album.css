@@ -1,0 +1,236 @@
+/* 앨범정보 */
+.album_info {
+    display: flex;
+    align-items: center;
+}
+
+.album_details {
+    margin-top: 50px;
+    margin-left: 20px;
+}
+
+.album_info_grid {
+    display: grid;
+    grid-template-columns: 20px auto auto auto;
+    align-items: center;
+    gap: 10px;
+}
+
+.album_artist_img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.album_artist_img img {
+    width: 100%;
+    height: auto;
+}
+
+.album_artist_name,
+.album_release_year,
+.album_total_play_info {
+    display: flex;
+    align-items: center;
+}
+
+.album_active_button_box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+    height: 80px;
+    padding: 16px;
+}
+
+.album_left_button_box {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.album_play_button {
+    width: 48px;
+    height: 100%;
+    background-color: #fff;
+}
+
+.album_fa-heart {
+    font-size: 28px;
+    color: #ffffffb2;
+}
+
+.album_fa-ellipsis {
+    font-size: 24px;
+    color: #ffffffb2;
+}
+
+.album_list_view_box {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.album_list_button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 66px;
+    height: 100%;
+    gap: 10px;
+}
+
+.album_list_button > span {
+    width: auto;
+    color: #ffffffb2;
+}
+
+.album_fa-list {
+    font-size: 16px;
+    color: #ffffffb2;
+}
+
+.album_track_title_box {
+    display: grid;
+    grid-template-columns: 12px 12px 8fr 12px 2fr;
+    align-items: center;
+    height: 36px;
+    color: #ffffffb2;
+}
+
+.album_track_title_num {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.album_track_title_text {
+    display: flex;
+    align-items: center;
+}
+
+.album_track_title_time {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 52px;
+}
+
+.album_track_list_box {
+    margin-top: 10px;
+}
+
+.album_track {
+    display: grid;
+    grid-template-columns: 12px 12px 8fr 12px 2fr;
+    align-items: center;
+    height: 50px;
+}
+
+.album_track:hover {
+    background-color: #fff2;
+}
+
+.album_track_num {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.album_track_num:hover span {
+    display: none;
+}
+
+.album_track_num:hover button {
+    display: block;
+}
+
+.album_track_num_txt {
+    position: absolute;
+    cursor: pointer;
+}
+
+.album_track_num_icon {
+    position: absolute;
+    cursor: pointer;
+    display: none;
+}
+
+.album_track_num_icon i {
+    color: #fff;
+}
+
+.album_track_empty {
+    width: 100%;
+    height: 100%;
+}
+
+.album_track_info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+/* 트랙아티스트네임 1 이상일때 */
+.album_track_artists {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.album_track_artists a {
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.album_track_artists a:not(:last-child)::after {
+    content: ', ';
+}
+
+.album_track_title a {
+    display: inline;
+    color: #fff;
+}
+
+.album_track_info > span:hover a {
+    text-decoration: underline;
+}
+
+.album_track_time_box {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 20px;
+    padding-right: 10px;
+}
+
+.album_track_fa-heart {
+    color: #000;
+}
+
+.album_track_heart_icon:hover i {
+    color: #fff;
+}
+
+.album_track_fa-ellipsis {
+    color: #000;
+}
+
+.album_track_option_icon:hover i {
+    color: #fff;
+}
+
+.album_more_song {
+    margin-top: 50px;
+}

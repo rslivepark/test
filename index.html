@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Spotify with Weather</title>
+    <script
+      src="https://kit.fontawesome.com/f12998d844.js"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script src="apikey.js"></script>
+  </head>
+
+  <body>
+    <div class="spinner" id="spinner"></div>
+    <div id="wrap" class="bg-black d-flex flex-md-row flex-column">
+      <div class="left-section d-flex flex-column justify-content-between">
+        <nav
+          id="nav"
+          class="d-flex flex-md-column flex-row justify-content-between"
+        >
+          <a href="#" class="logo-box">
+            <!-- <img src="img/logo.png" alt="Spotify Logo" class="main-logo" /> -->
+            <i class="fa-brands fa-spotify"></i><span> Spotify</span>
+          </a>
+          <ul class="menu d-flex flex-md-column flex-row">
+            <li>
+              <button class="menu-btn">
+                <i class="fa-solid fa-house"></i>
+                홈
+              </button>
+            </li>
+            <li class="d-none d-sm-block">
+              <button class="menu-btn weather-search-btn">
+                <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                검색
+              </button>
+            </li>
+            <li>
+              <button class="menu-btn weather-menu-btn">
+                <i class="fa-solid fa-sun" aria-hidden="true"></i>
+                날씨 추천곡
+              </button>
+            </li>
+          </ul>
+          <div class="weather-window d-md-block d-none">
+            <div id="map"></div>
+            <input
+              type="text"
+              id="locationContent"
+              placeholder="Enter content here"
+              style="margin: 5px 10px 5px 4px; width: 210px"
+            />
+            <div class="locationMarkers">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                id="addMarkerButton"
+                style="width: 210px; margin: 4px"
+              >
+                Add Marker
+              </button>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                id="mySiteButton"
+                style="width: 210px; margin: 4px"
+              >
+                My Location
+              </button>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                id="deleteMarkerButton"
+                style="width: 210px; margin: 4px"
+              >
+                Delete Marker
+              </button>
+            </div>
+          </div>
+        </nav>
+        <footer class="left-footer d-md-block d-none">
+          <div class="left-footer-link-box">
+            <ul class="left-footer-links">
+              <li><a href="#">법률 정보</a></li>
+              <li><a href="#">안전 및 개인정보 보호 센터</a></li>
+              <li><a href="#">개인정보 처리방침</a></li>
+              <li><a href="#">접근성</a></li>
+            </ul>
+            <a href="#" class="footer-link-cookie">쿠키</a>
+          </div>
+          <button class="left-footer-language">
+            <i class="fa-solid fa-globe"></i>
+            한국어
+          </button>
+        </footer>
+      </div>
+      <main id="main" class="col">
+        <header
+          id="header"
+          class="d-flex justify-content-between align-items-center"
+        >
+          <div class="right-header-bg"></div>
+          <div class="header-left d-flex gap-1">
+            <button class="header-prev-btn">
+              <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <button class="header-next-btn">
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+          <div class="search">
+            <form class="search-submit">
+              <input
+                id="search-input"
+                class="search-input"
+                type="text"
+                placeholder="검색어를 입력하세요"
+              />
+              <span class="search-span"></span>
+            </form>
+          </div>
+          <div class="header-right d-none d-sm-block login-buttons">
+            <button class="sign-up-btn">가입하기</button>
+            <button class="log-in-btn">로그인</button>
+          </div>
+        </header>
+        <div class="section-footer-container">
+          <section id="section">
+            <div
+              class="contents-container d-flex flex-column gap-4 main_weather_playlist"
+            >
+              <div class="contents-line">
+                <div class="contents-header weather_playlist_header">
+                  <h1 class="contents-header-title h4 text-white">
+                    날씨 플레이리스트
+                    <i class="fa-solid fa-sun sun" aria-hidden="true"></i>
+                  </h1>
+                  <button
+                    class="contents-header-show-more weather-row-more"
+                    onclick="showTwoLines(this)"
+                  >
+                    더 보기
+                  </button>
+                </div>
+                <!---->
+
+                <div class="card-container weather-playlist-row">
+                  <div class="contents-card playlist-item">
+                    <div class="card-img-box position-relative">
+                      <div class="card-img">
+                        <img
+                          src="https://seed-mix-image.spotifycdn.com/v6/img/desc/Sunshine/en/large"
+                          alt="Sunshine Mix"
+                        />
+                      </div>
+                    </div>
+                    <div class="card-text">
+                      <a
+                        href="https://open.spotify.com/playlist/37i9dQZF1EIhkGftn1D0Mh"
+                        class="weather-playlist-more"
+                        target="_blank"
+                      >
+                        Sunshine Mix
+                      </a>
+                    </div>
+                  </div>
+                  <div class="contents-card playlist-item">
+                    <div class="card-img-box position-relative">
+                      <div class="card-img">
+                        <img
+                          src="https://i.scdn.co/image/ab67706f00000003e30f54d8b2a938d6c5fc13a0"
+                          alt="Sunny Day"
+                        />
+                      </div>
+                    </div>
+                    <div class="card-text">
+                      <a
+                        href="https://open.spotify.com/playlist/37i9dQZF1DX1BzILRveYHb"
+                        class="weather-playlist-more"
+                        target="_blank"
+                      >
+                        Sunny Day
+                      </a>
+                    </div>
+                  </div>
+                  <div class="contents-card playlist-item">
+                    <div class="card-img-box position-relative">
+                      <div class="card-img">
+                        <img
+                          src="https://i.scdn.co/image/ab67706f00000003f3ab60ea48380193bf6c3bd0"
+                          alt="Summer Sunshine Reggae"
+                        />
+                      </div>
+                    </div>
+                    <div class="card-text">
+                      <a
+                        href="https://open.spotify.com/playlist/37i9dQZF1DXbwoaqxaoAVr"
+                        class="weather-playlist-more"
+                        target="_blank"
+                      >
+                        Summer Sunshine Reggae...
+                      </a>
+                    </div>
+                  </div>
+                  <div class="contents-card playlist-item">
+                    <div class="card-img-box position-relative">
+                      <div class="card-img">
+                        <img
+                          src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb01489ca2656b244323682f2c"
+                          alt="driving on a sunny summer day"
+                        />
+                      </div>
+                    </div>
+                    <div class="card-text">
+                      <a
+                        href="https://open.spotify.com/playlist/5DJ1rP5evelj6wYSxqnjzX"
+                        class="weather-playlist-more"
+                        target="_blank"
+                      >
+                        driving on a sunny summer day...
+                      </a>
+                    </div>
+                  </div>
+                  <div class="contents-card playlist-item">
+                    <div class="card-img-box position-relative">
+                      <div class="card-img">
+                        <img
+                          src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbb7aad6ecfb7620ce2aa3a129"
+                          alt="POOL PARTY 2024 💦 SUMMER HITS"
+                        />
+                      </div>
+                    </div>
+                    <div class="card-text">
+                      <a
+                        href="https://open.spotify.com/playlist/4nFTwoPp8L6uato870FdW3"
+                        class="weather-playlist-more"
+                        target="_blank"
+                      >
+                        POOL PARTY 2024 💦 SUMMER HITS...
+                      </a>
+                    </div>
+                  </div>
+                  <div class="contents-card playlist-item">
+                    <div class="card-img-box position-relative">
+                      <div class="card-img">
+                        <img
+                          src="https://seed-mix-image.spotifycdn.com/v6/img/desc/Happy%20Sunshine/en/large"
+                          alt="Happy Sunshine Mix"
+                        />
+                      </div>
+                    </div>
+                    <div class="card-text">
+                      <a
+                        href="https://open.spotify.com/playlist/37i9dQZF1EIh0gn0qhBsTI"
+                        class="weather-playlist-more"
+                        target="_blank"
+                      >
+                        Happy Sunshine Mix
+                      </a>
+                    </div>
+                  </div>
+                  <div class="contents-card playlist-item">
+                    <div class="card-img-box position-relative">
+                      <div class="card-img">
+                        <img
+                          src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb7a87e971d384d7742a9e05f9"
+                          alt="SUMMER 2024 🌞 TOP 100 SONGS"
+                        />
+                      </div>
+                    </div>
+                    <div class="card-text">
+                      <a
+                        href="https://open.spotify.com/playlist/11X76c5MphTG1VgKmC7hgb"
+                        class="weather-playlist-more"
+                        target="_blank"
+                      >
+                        SUMMER 2024 🌞 TOP 100 SONGS...
+                      </a>
+                    </div>
+                  </div>
+                  <div class="contents-card playlist-item">
+                    <div class="card-img-box position-relative">
+                      <div class="card-img">
+                        <img
+                          src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbc6933df744eb5f05e6463f20"
+                          alt="☀️Sunny day vibes🌷"
+                        />
+                      </div>
+                    </div>
+                    <div class="card-text">
+                      <a
+                        href="https://open.spotify.com/playlist/2RTmyxpcu6aOyd9AqukEYe"
+                        class="weather-playlist-more"
+                        target="_blank"
+                      >
+                        ☀️Sunny day vibes🌷
+                      </a>
+                    </div>
+                  </div>
+                  <div class="contents-card playlist-item">
+                    <div class="card-img-box position-relative">
+                      <div class="card-img">
+                        <img
+                          src="https://i.scdn.co/image/ab67706f0000000303ef984c282b47ab16fa9414"
+                          alt="Sunny Beats"
+                        />
+                      </div>
+                    </div>
+                    <div class="card-text">
+                      <a
+                        href="https://open.spotify.com/playlist/37i9dQZF1DXbtuVQL4zoey"
+                        class="weather-playlist-more"
+                        target="_blank"
+                      >
+                        Sunny Beats
+                      </a>
+                    </div>
+                  </div>
+                  <div class="contents-card playlist-item">
+                    <div class="card-img-box position-relative">
+                      <div class="card-img">
+                        <img
+                          src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbf118191b5a6d33f7785d2353"
+                          alt="Sunny Day 70’s Vibes 🌞"
+                        />
+                      </div>
+                    </div>
+                    <div class="card-text">
+                      <a
+                        href="https://open.spotify.com/playlist/0nXXUlBpqAW9sJngHEiNyW"
+                        class="weather-playlist-more"
+                        target="_blank"
+                      >
+                        Sunny Day 70’s Vibes 🌞...
+                      </a>
+                    </div>
+                  </div>
+
+                  <div class="contents-card playlist-item">
+                    <div class="card-img-box position-relative">
+                      <div class="card-img">
+                        <img
+                          src="https://i.scdn.co/image/ab67706f000000039d9ff0c2c65711d1bcb780aa"
+                          alt="Summer Jazz"
+                        />
+                      </div>
+                    </div>
+                    <div class="card-text">
+                      <a
+                        href="https://open.spotify.com/playlist/37i9dQZF1DWTKxc7ZObqeH"
+                        class="weather-playlist-more"
+                        target="_blank"
+                      >
+                        Summer Jazz
+                      </a>
+                    </div>
+                  </div>
+
+                  <div class="contents-card playlist-item">
+                    <div class="card-img-box position-relative">
+                      <div class="card-img">
+                        <img
+                          src="https://image-cdn-fa.spotifycdn.com/image/ab67706c0000bebba55c259eaf7c84d90adbc30d"
+                          alt="when its finally sunny outside"
+                        />
+                      </div>
+                    </div>
+                    <div class="card-text">
+                      <a
+                        href="https://open.spotify.com/playlist/7AhHEE4PCTq10hBWJHJAVC"
+                        class="weather-playlist-more"
+                        target="_blank"
+                      >
+                        when its finally sunny outside...
+                      </a>
+                    </div>
+                  </div>
+
+                  <div class="contents-card playlist-item">
+                    <div class="card-img-box position-relative">
+                      <div class="card-img">
+                        <img
+                          src="https://i.scdn.co/image/ab67706f00000003e8f9494c88d12a860415992d"
+                          alt="Summer Acoustic"
+                        />
+                      </div>
+                    </div>
+                    <div class="card-text">
+                      <a
+                        href="https://open.spotify.com/playlist/37i9dQZF1DWUNIrSzKgQbP"
+                        class="weather-playlist-more"
+                        target="_blank"
+                      >
+                        Summer Acoustic
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 날씨 플레이리스트 끝 -->
+            <div class="contents-container d-flex flex-column gap-4">
+              <div class="contents-line">
+                <div class="contents-header">
+                  <a href="#" class="contents-header-title h4 text-white"
+                    >인기 아티스트</a
+                  >
+                  <button
+                    class="contents-header-show-more"
+                    onclick="showTwoLines(this)"
+                  >
+                    더 보기
+                  </button>
+                </div>
+                <div class="card-container">
+                  <div class="contents-card">
+                    <div class="card-img-box position-relative">
+                      <div class="card-play-btn"></div>
+                      <div class="card-img card-artist-img">
+                        <img
+                          src="https://i.scdn.co/image/ab6761610000517480668ba2b15094d083780ea9"
+                          alt=""
+                        />
+                      </div>
+                    </div>
+                    <div class="card-text">
+                      <p class="card-title">NewJeans</p>
+                      <p class="card-subtitle">아티스트</p>
+                    </div>
+                  </div>
+                  <!-- .contents-card -->
+                  <div class="contents-card">
+                    <div class="card-img-box">
+                      <div class="card-play-btn"></div>
+                      <div class="card-img card-artist-img">
+                        <img
+                          src="https://i.scdn.co/image/ab6761610000517480668ba2b15094d083780ea9"
+                          alt=""
+                        />
+                      </div>
+                    </div>
+                    <div class="card-text">
+                      <p class="card-title">NewJeans</p>
+                      <p class="card-subtitle">아티스트</p>
+                    </div>
+                  </div>
+                  <!-- .contents-card -->
+                  <div class="contents-card">
+                    <div class="card-img-box position-relative">
+                      <div class="card-play-btn"></div>
+                      <div class="card-img card-artist-img">
+                        <img
+                          src="https://i.scdn.co/image/ab6761610000517480668ba2b15094d083780ea9"
+                          alt=""
+                        />
+                      </div>
+                    </div>
+                    <div class="card-text">
+                      <p class="card-title">NewJeans</p>
+                      <p class="card-subtitle">아티스트</p>
+                    </div>
+                  </div>
+                  <!-- .contents-card -->
+                  <div class="contents-card">
+                    <div class="card-img-box position-relative">
+                      <div class="card-play-btn"></div>
+                      <div class="card-img card-artist-img">
+                        <img
+                          src="https://i.scdn.co/image/ab6761610000517480668ba2b15094d083780ea9"
+                          alt=""
+                        />
+                      </div>
+                    </div>
+                    <div class="card-text">
+                      <p class="card-title">NewJeans</p>
+                      <p class="card-subtitle">아티스트</p>
+                    </div>
+                  </div>
+                  <!-- .contents-card -->
+                  <div class="contents-card">
+                    <div class="card-img-box position-relative">
+                      <div class="card-play-btn"></div>
+                      <div class="card-img card-artist-img">
+                        <img
+                          src="https://i.scdn.co/image/ab6761610000517480668ba2b15094d083780ea9"
+                          alt=""
+                        />
+                      </div>
+                    </div>
+                    <div class="card-text">
+                      <p class="card-title">NewJeans</p>
+                      <p class="card-subtitle">아티스트</p>
+                    </div>
+                  </div>
+                  <!-- .contents-card -->
+                  <div class="contents-card">
+                    <div class="card-img-box position-relative">
+                      <div class="card-play-btn"></div>
+                      <div class="card-img card-artist-img">
+                        <img
+                          src="https://i.scdn.co/image/ab6761610000517480668ba2b15094d083780ea9"
+                          alt=""
+                        />
+                      </div>
+                    </div>
+                    <div class="card-text">
+                      <p class="card-title">NewJeans</p>
+                      <p class="card-subtitle">아티스트</p>
+                    </div>
+                  </div>
+                  <!-- .contents-card -->
+                  <div class="contents-card">
+                    <div class="card-img-box position-relative">
+                      <div class="card-play-btn"></div>
+                      <div class="card-img card-artist-img">
+                        <img
+                          src="https://i.scdn.co/image/ab6761610000517480668ba2b15094d083780ea9"
+                          alt=""
+                        />
+                      </div>
+                    </div>
+                    <div class="card-text">
+                      <p class="card-title">NewJeans</p>
+                      <p class="card-subtitle">아티스트</p>
+                    </div>
+                  </div>
+                  <!-- .contents-card -->
+                  <div class="contents-card">
+                    <div class="card-img-box position-relative">
+                      <div class="card-play-btn"></div>
+                      <div class="card-img card-artist-img">
+                        <img
+                          src="https://i.scdn.co/image/ab6761610000517480668ba2b15094d083780ea9"
+                          alt=""
+                        />
+                      </div>
+                    </div>
+                    <div class="card-text">
+                      <p class="card-title">NewJeans</p>
+                      <p class="card-subtitle">아티스트</p>
+                    </div>
+                  </div>
+                  <!-- .contents-card -->
+                  <div class="contents-card">
+                    <div class="card-img-box position-relative">
+                      <div class="card-play-btn"></div>
+                      <div class="card-img card-artist-img">
+                        <img
+                          src="https://i.scdn.co/image/ab6761610000517480668ba2b15094d083780ea9"
+                          alt=""
+                        />
+                      </div>
+                    </div>
+                    <div class="card-text">
+                      <p class="card-title">NewJeans</p>
+                      <p class="card-subtitle">아티스트</p>
+                    </div>
+                  </div>
+                  <!-- .contents-card -->
+                </div>
+                <!-- .card-container -->
+              </div>
+              <!-- .contents-line -->
+              <div class="contents-line">
+                <div class="contents-header">
+                  <a href="#" class="contents-header-title h4 text-white"
+                    >인기 앨범</a
+                  >
+                  <button
+                    class="contents-header-show-more"
+                    onclick="showTwoLines(this)"
+                  >
+                    더 보기
+                  </button>
+                </div>
+                <!-- 카드 그리드 시작 -->
+                <div class="card-container">
+                  <!-- 여기서부터 반복해야 할 부분 -->
+                  <!-- 한 줄만 표시할 때는 최대 9개까지만 불러와주세요. -->
+                  <div class="contents-card">
+                    <div class="card-img-box position-relative">
+                      <div class="card-play-btn"></div>
+                      <div class="card-img">
+                        <img
+                          src="https://i.scdn.co/image/ab67616d00001e02b657fbb27b17e7bd4691c2b2"
+                          alt=""
+                        />
+                      </div>
+                    </div>
+                    <div class="card-text">
+                      <p class="card-title">How Sweet</p>
+                      <p class="card-subtitle card-subtitle-artist">NewJeans</p>
+                    </div>
+                  </div>
+                  <!-- 카드 1장 끝 -->
+                  <div class="contents-card">
+                    <div class="card-img-box position-relative">
+                      <div class="card-play-btn"></div>
+                      <div class="card-img">
+                        <img
+                          src="https://i.scdn.co/image/ab67616d00001e02b657fbb27b17e7bd4691c2b2"
+                          alt=""
+                        />
+                      </div>
+                    </div>
+                    <div class="card-text">
+                      <p class="card-title">How Sweet</p>
+                      <p class="card-subtitle card-subtitle-artist">NewJeans</p>
+                    </div>
+                  </div>
+                  <!-- 카드 1장 끝 -->
+                  <div class="contents-card">
+                    <div class="card-img-box position-relative">
+                      <div class="card-play-btn"></div>
+                      <div class="card-img">
+                        <img
+                          src="https://i.scdn.co/image/ab67616d00001e02b657fbb27b17e7bd4691c2b2"
+                          alt=""
+                        />
+                      </div>
+                    </div>
+                    <div class="card-text">
+                      <p class="card-title">How Sweet</p>
+                      <p class="card-subtitle card-subtitle-artist">NewJeans</p>
+                    </div>
+                  </div>
+                  <!-- 카드 1장 끝 -->
+                  <div class="contents-card">
+                    <div class="card-img-box position-relative">
+                      <div class="card-play-btn"></div>
+                      <div class="card-img">
+                        <img
+                          src="https://i.scdn.co/image/ab67616d00001e02b657fbb27b17e7bd4691c2b2"
+                          alt=""
+                        />
+                      </div>
+                    </div>
+                    <div class="card-text">
+                      <p class="card-title">How Sweet</p>
+                      <p class="card-subtitle card-subtitle-artist">NewJeans</p>
+                    </div>
+                  </div>
+                  <!-- 카드 1장 끝 -->
+                  <div class="contents-card">
+                    <div class="card-img-box position-relative">
+                      <div class="card-play-btn"></div>
+                      <div class="card-img">
+                        <img
+                          src="https://i.scdn.co/image/ab67616d00001e02b657fbb27b17e7bd4691c2b2"
+                          alt=""
+                        />
+                      </div>
+                    </div>
+                    <div class="card-text">
+                      <p class="card-title">How Sweet</p>
+                      <p class="card-subtitle card-subtitle-artist">NewJeans</p>
+                    </div>
+                  </div>
+                  <!-- 카드 1장 끝 -->
+                  <div class="contents-card">
+                    <div class="card-img-box position-relative">
+                      <div class="card-play-btn"></div>
+                      <div class="card-img">
+                        <img
+                          src="https://i.scdn.co/image/ab67616d00001e02b657fbb27b17e7bd4691c2b2"
+                          alt=""
+                        />
+                      </div>
+                    </div>
+                    <div class="card-text">
+                      <p class="card-title">How Sweet</p>
+                      <p class="card-subtitle card-subtitle-artist">NewJeans</p>
+                    </div>
+                  </div>
+                  <!-- 카드 1장 끝 -->
+                  <div class="contents-card">
+                    <div class="card-img-box position-relative">
+                      <div class="card-play-btn"></div>
+                      <div class="card-img">
+                        <img
+                          src="https://i.scdn.co/image/ab67616d00001e02b657fbb27b17e7bd4691c2b2"
+                          alt=""
+                        />
+                      </div>
+                    </div>
+                    <div class="card-text">
+                      <p class="card-title">How Sweet</p>
+                      <p class="card-subtitle card-subtitle-artist">NewJeans</p>
+                    </div>
+                  </div>
+                  <!-- 카드 1장 끝 -->
+                  <div class="contents-card">
+                    <div class="card-img-box position-relative">
+                      <div class="card-play-btn"></div>
+                      <div class="card-img">
+                        <img
+                          src="https://i.scdn.co/image/ab67616d00001e02b657fbb27b17e7bd4691c2b2"
+                          alt=""
+                        />
+                      </div>
+                    </div>
+                    <div class="card-text">
+                      <p class="card-title">How Sweet</p>
+                      <p class="card-subtitle card-subtitle-artist">NewJeans</p>
+                    </div>
+                  </div>
+                  <!-- 카드 1장 끝 -->
+                  <div class="contents-card">
+                    <div class="card-img-box position-relative">
+                      <div class="card-play-btn"></div>
+                      <div class="card-img">
+                        <img
+                          src="https://i.scdn.co/image/ab67616d00001e02b657fbb27b17e7bd4691c2b2"
+                          alt=""
+                        />
+                      </div>
+                    </div>
+                    <div class="card-text">
+                      <p class="card-title">How Sweet</p>
+                      <p class="card-subtitle card-subtitle-artist">NewJeans</p>
+                    </div>
+                  </div>
+                  <!-- 카드 1장 끝 -->
+                </div>
+                <!-- 카드 그리드 끝 -->
+              </div>
+              <!-- 전체 한 줄 끝 -->
+            </div>
+          </section>
+          <footer class="right-footer">
+            <div class="right-footer-top">
+              <ul class="right-footer-links">
+                <li>
+                  <ul class="f-sub_menu">
+                    <li class="right-footer-title">회사</li>
+                    <li><a href="#" class="right-footer-item">상세정보</a></li>
+                    <li><a href="#" class="right-footer-item">채용정보</a></li>
+                    <li>
+                      <a href="#" class="right-footer-item">For the Record</a>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <ul class="f-sub_menu">
+                    <li class="right-footer-title">커뮤니티</li>
+                    <li><a href="#" class="right-footer-item">아티스트</a></li>
+                    <li><a href="#" class="right-footer-item">개발자</a></li>
+                    <li><a href="#" class="right-footer-item">투자자</a></li>
+                    <li><a href="#" class="right-footer-item">공급업체</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <ul class="f-sub_menu">
+                    <li class="right-footer-title">유용한 링크</li>
+                    <li><a href="#" class="right-footer-item">지원</a></li>
+                  </ul>
+                </li>
+              </ul>
+              <ul class="f-social">
+                <li>
+                  <a href="#" class="social-icon"
+                    ><i class="fa-brands fa-instagram"></i
+                  ></a>
+                </li>
+                <li>
+                  <a href="#" class="social-icon"
+                    ><i class="fa-brands fa-twitter"></i
+                  ></a>
+                </li>
+                <li>
+                  <a href="#" class="social-icon"
+                    ><i class="fa-brands fa-facebook-f"></i
+                  ></a>
+                </li>
+              </ul>
+            </div>
+            <!-- .right-footer-top -->
+            <div class="right-footer-bottom">
+              <span class="copyright">&copy; 2024 Noonatify</span>
+            </div>
+          </footer>
+        </div>
+      </main>
+    </div>
+    <!-- #wrap -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      type="text/javascript"
+      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=81e1670a7c5674de61193229e636e542"
+    ></script>
+    <script src="main.js"></script>
+    <script src="js/main-page.js"></script>
+    <script src="js/weather.js" type="module"></script>
+    <script src="js/search.js"></script>
+    <script src="js/album.js"></script>
+    <script src="js/artist-page.js"></script>
+  </body>
+</html>
