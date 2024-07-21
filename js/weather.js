@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const getWeatherInfo = async () => {
-    const WEATHER_API_KEY = config.weatherAPI;
+    const WEATHER_API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
     try {
       spinner.style.display = 'flex';
 
