@@ -1,3 +1,9 @@
+const WEATHER_API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
+const CLIENT_ID = import.meta.env.VITE_CLIENT_ID;
+const CLIENT_SECRET = import.meta.env.VITE_CLIENT_SECRET;
+
+console.log(WEATHER_API_KEY, CLIENT_ID, CLIENT_SECRET);
+
 // 메인화면으로 가기
 document
   .querySelector('li:nth-child(1) > button')

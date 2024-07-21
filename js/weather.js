@@ -271,8 +271,8 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const callSpotifyWeatherAPI = async (weatherDescription) => {
-    const CLIENT_ID = config.clientID;
-    const CLIENT_SECRET = config.clientSecret;
+    const CLIENT_ID = import.meta.env.VITE_CLIENT_ID;
+    const CLIENT_SECRET = import.meta.env.VITE_CLIENT_SECRET;
 
     const token = await getAccessTokenWeather(CLIENT_ID, CLIENT_SECRET);
     let query = weatherDescription;
